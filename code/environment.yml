@@ -1,0 +1,22 @@
+name: 685Proj
+channels:
+  - defaults
+  - conda-forge
+  - pytorch  # Add pytorch channel for installing torch
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - scikit-learn
+  - sentence-transformers
+  - transformers
+  - tqdm
+  - scipy
+  - matplotlib
+  - faiss-cpu
+  - pip:
+    - torch  # Install torch via pip from PyPI
+    - ir-datasets  # Install ir-datasets via pip from PyPI
+    - wandb
+    - ranx
+    - rank-eval
