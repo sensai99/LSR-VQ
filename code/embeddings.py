@@ -138,6 +138,7 @@ class EmbeddingProcessor:
         if os.path.exists(pass_embs_path) and os.path.exists(self.pass_ids_path):
             print("Loading cached passage embeddings & ids...")
             passage_embeddings = torch.load(pass_embs_path).to(device = self.device)
+            self.emb_dim = passage_embeddings.shape[-1]
 
             with open(pass_ids_path, "r") as f:
                 passage_ids = json.load(f)
@@ -153,6 +154,7 @@ class EmbeddingProcessor:
                 }
         
         passage_embeddings, passage_ids = self.compute_embeddings(type = 'passage', mode = mode)
+        self.emb_dim = passage_embeddings.shape[-1]
 
         # Save embeddings to the appropriate path
         torch.save(passage_embeddings, pass_embs_path)
@@ -181,6 +183,7 @@ class EmbeddingProcessor:
         if os.path.exists(query_embs_path) and os.path.exists(self.query_ids_path):
             print("Loading cached query embeddings & ids...")
             query_embeddings = torch.load(query_embs_path).to(device = self.device)
+            self.emb_dim = query_embeddings.shape[-1]
 
             with open(query_ids_path, "r") as f:
                 query_ids = json.load(f)
@@ -196,6 +199,7 @@ class EmbeddingProcessor:
                 }
         
         query_embeddings, query_ids = self.compute_embeddings(type = 'query', mode = mode)
+        self.emb_dim = query_embeddings.shape[-1]
 
         # Save embeddings to the appropriate path
         torch.save(query_embeddings, query_embs_path)
@@ -225,6 +229,7 @@ class EmbeddingProcessor:
             print("Loading cached embeddings & ids...")
             passage_embeddings = torch.load(pass_embs_path).to(device = self.device)
             query_embeddings = torch.load(query_embs_path).to(device = self.device)
+            self.emb_dim = passage_embeddings.shape[-1]
 
             with open(pass_ids_path, "r") as f:
                 passage_ids = json.load(f)
@@ -246,6 +251,7 @@ class EmbeddingProcessor:
         
         passage_embeddings, passage_ids = self.compute_embeddings(type = 'passage', mode = mode)
         query_embeddings, query_ids = self.compute_embeddings(type = 'query', mode = mode)
+        self.emb_dim = passage_embeddings.shape[-1]
 
         # Save embeddings to the appropriate path
         torch.save(passage_embeddings, pass_embs_path)
@@ -271,4 +277,10 @@ class EmbeddingProcessor:
                     'query_ids': query_ids
                 }
             }
+    
+    def get_emd_dim(self):
+        if self.emb_dim is None:
+            raise ValueError('Embedding dimension not found!')
+        
+        return self.emb_dim
         

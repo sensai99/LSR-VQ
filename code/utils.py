@@ -28,3 +28,9 @@ def tsv_to_dict_multiple(file_path, keys = [0, 2]):
                 data[row[keys[0]]] = [row[keys[1]]]
 
     return data
+
+# Split the embedding to k chunks
+def split_embedding_into_chunks(embeddings, k_chunks):
+    bsz, dim = embeddings.shape
+    assert dim % k_chunks == 0
+    return embeddings.view(bsz * k_chunks, dim // k_chunks)
