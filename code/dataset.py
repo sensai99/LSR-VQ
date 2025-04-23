@@ -21,21 +21,21 @@ class DataProcessor:
 
     def print_samples(self, n = 5):
         print("Passages:")
-        for i, (key, value) in enumerate(dict(list(self.passages.items())[:n])):
+        for i, (key, value) in enumerate(list(self.passages.items())[:n]):
             print(f"{key}: {value}")
 
-        print("Train Queries:")
-        for i, (key, value) in enumerate(dict(list(self.queries_train.items())[:n])):
+        print("\nTrain Queries:")
+        for i, (key, value) in enumerate(list(self.queries_train.items())[:n]):
             print(f"{key}: {value}")
 
-        print("Dev Queries:")
-        for i, (key, value) in enumerate(dict(list(self.queries_dev.items())[:n])):
+        print("\nDev Queries:")
+        for i, (key, value) in enumerate(list(self.queries_dev.items())[:n]):
             print(f"{key}: {value}")
 
-        print("Train Qrels:")
-        for i, (key, value) in enumerate(dict(list(self.qrels_train.items())[:n])):
+        print("\nTrain Qrels:")
+        for i, (key, value) in enumerate(list(self.qrels_train.items())[:n]):
             print(f"{key}: {value}")
 
-        print("Dev Qrels:")
-        for i, (key, value) in enumerate(dict(list(self.qrels_dev.items())[:n])):
+        print("\nDev Qrels:")
+        for i, (key, value) in enumerate(list(self.qrels_dev.items())[:n]):
             print(f"{key}: {value}")

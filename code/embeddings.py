@@ -9,6 +9,7 @@ class EmbeddingProcessor:
         self.data_processor = data_processor
         self.model = model
         self.tokenizer = tokenizer
+        self.emb_dim = None
         self.emb_root_dir = emb_root_dir
         self.device = device
 
@@ -26,6 +27,7 @@ class EmbeddingProcessor:
                 'query_ids': os.path.join(self.emb_root_dir, 'dev', 'query_ids.json')
             }
         }
+        self.passages, self.queries_train, self.queries_dev, self.qrels_train, self.qrels_dev = None, None, None, None, None
 
         self.batch_size = batch_size
         return
@@ -98,7 +100,7 @@ class EmbeddingProcessor:
         
         return filtered_data
             
-    def compute_embeddings(self, type = 'passage', mode = 'train'):
+    def compute_embeddings(self, type = 'passage', mode = 'train', limit = None):
         if type == None:
             print('Embedding type not provided, Not computing embeddings!')
             return
@@ -111,10 +113,13 @@ class EmbeddingProcessor:
             data = data['queries']
         elif type == 'passage':
             data = data['passages']
+
+        if limit is not None:
+            data = data[:limit]
         
         data_embeddings = []
         
-        ids = data.keys()
+        ids = list(data.keys())
         for i in tqdm(range(0, len(ids), self.batch_size), desc = f"Encoding {type}"):
             batch_data = [data[id] for id in ids[i:i + self.batch_size]]
 
@@ -131,7 +136,7 @@ class EmbeddingProcessor:
     
         return data_embeddings, list(ids)
     
-    def load_or_save_passage_embeddings(self, mode = 'train'):
+    def load_or_save_passage_embeddings(self, mode = 'train', limit = None):
         pass_embs_path = self.embeddings_path[mode]['passage_embs']
         pass_ids_path = self.embeddings_path[mode]['passage_ids']
         
@@ -153,7 +158,7 @@ class EmbeddingProcessor:
                     }
                 }
         
-        passage_embeddings, passage_ids = self.compute_embeddings(type = 'passage', mode = mode)
+        passage_embeddings, passage_ids = self.compute_embeddings(type = 'passage', mode = mode, limit = limit)
         self.emb_dim = passage_embeddings.shape[-1]
 
         # Save embeddings to the appropriate path
@@ -278,9 +283,8 @@ class EmbeddingProcessor:
                 }
             }
     
-    def get_emd_dim(self):
+    def get_emb_dim(self):
         if self.emb_dim is None:
             raise ValueError('Embedding dimension not found!')
         
         return self.emb_dim
-        

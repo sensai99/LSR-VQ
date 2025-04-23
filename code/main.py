@@ -11,7 +11,7 @@ from metrics import MetricsGenerator
 '''
     - Load the raw dataset
 '''
-data_processor = DataProcessor(data_root_dir = 'data')
+data_processor = DataProcessor(data_root_dir = './data')
 data = data_processor.get_data()
 passages, queries_train, queries_dev, qrels_train, qrels_dev = data['passages'], data['queries_train'], data['queries_dev'], data['qrels_train'], data['qrels_dev']
 data_processor.print_samples()
@@ -29,20 +29,19 @@ model = AutoModel.from_pretrained('facebook/contriever-msmarco').to(device)
     - Load/Save the embeddings
 '''
 embedding_processor = EmbeddingProcessor(data_processor = data_processor, model = model, tokenizer = tokenizer, emb_root_dir = 'embeddings', batch_size = 128, device = device)
-emd_dim = embedding_processor.get_emd_dim()
+emd_dim = embedding_processor.get_emb_dim()
 
 '''
     - Train the Vector Quantizer
     - Vector quantize the embeddings & Get the code indices
 '''
-quantizer = Quantize(dim = emd_dim, num_clusters = 256)
+quantizer = Quantize(dim = emd_dim, num_clusters = 256).to(device = device)
 vq_hanlder = VQHandler(embedding_processor = embedding_processor, quantizer = quantizer, num_chunks = 32, device = device)
 quantizer = vq_hanlder.train()
 
 # Get the code indices for each passage in development set
 # These code indices are used to build the inverted index
 code_indices = vq_hanlder.inference(type = 'passage', mode = 'dev')
-
 
 '''
     - Create the inverted index with the vector quantized indices
@@ -66,7 +65,7 @@ qrels = {
 
 # Get the code indices for each query in the development set
 # These code indices are used to calculate the scores and metrics
-code_indices = vq_hanlder.inference(type = 'query', mode = 'dev')
+query_code_indices = vq_hanlder.inference(type = 'query', mode = 'dev')
 
 metrics_generator = MetricsGenerator(inverted_index = inverted_index_handler, embedding_processor = embedding_processor, qrels = qrels)
-metrics_generator.get_metrics()
+metrics_generator.get_metrics(code_indices = query_code_indices)

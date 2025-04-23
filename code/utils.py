@@ -7,10 +7,7 @@ def tsv_to_dict_unqiue(file_path, keys = [0, 1]):
 
         data = {}
         for row in reader:
-            if row[keys[0]] in data:
-                data[row[keys[0]]].append(row[keys[1]])
-            else:
-                data[row[keys[0]]] = [row[keys[1]]]
+            data[row[keys[0]]] = row[keys[1]]
 
     return data
 
