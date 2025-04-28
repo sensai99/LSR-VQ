@@ -3,15 +3,15 @@ import torch
 import torch.nn.functional as F
 
 class Quantize(nn.Module):
-    def __init__(self, dim, num_clusters, decay = 0.99, eps = 1e-5):
+    def __init__(self, codebook_vector_dim, num_clusters, decay = 0.99, eps = 1e-5):
         super().__init__()
 
-        self.dim = dim
+        self.dim = codebook_vector_dim
         self.num_clusters = num_clusters
         self.decay = decay
         self.eps = eps
 
-        embed = torch.randn(dim, num_clusters)
+        embed = torch.randn(codebook_vector_dim, num_clusters)
         self.register_buffer("embed", embed)
         self.register_buffer("cluster_size", torch.zeros(num_clusters))
         self.register_buffer("embed_avg", embed.clone())
