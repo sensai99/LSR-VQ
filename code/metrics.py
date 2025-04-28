@@ -1,5 +1,7 @@
 from tqdm import tqdm
 from ranx import Qrels, Run, evaluate
+from collections import Counter
+import numpy as np
 import faiss
 
 class MetricsGenerator:
