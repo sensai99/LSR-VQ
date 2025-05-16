@@ -60,7 +60,4 @@ The notebook includes experiments to vary quantization parameters (codebook size
 - NDCG@{10,100,1000}
 - Recall@{10,100,1000}
 
-## Notes
 
-- The project is structured for experimentation with sparse encoding and retrieval tasks.
-- Ideal for academic projects exploring dense-to-sparse transitions in IR.
