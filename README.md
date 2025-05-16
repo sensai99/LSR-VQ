@@ -14,14 +14,14 @@ Learned Sparse Retrieval with Vector Quantization
 
 This repository contains code for performing sparse retrieval using vector quantization techniques. It leverages transformer-based embeddings, quantizes them into sparse codes, and evaluates retrieval performance on datasets using metrics like MRR, NDCG, and Recall.
 
-## 📂 Structure
+## Structure
 
 - **EmbeddingProcessor class**: Handles generation and storage of query and passage embeddings.
 - **Dependencies**: Transformers, Torch, FAISS, ir_datasets, ranx, etc.
 - **Training/Dev Data**: Embeddings and IDs are saved/loaded from a specified directory structure.
 - **Utilities**: Custom utility scripts like `split_embedding_into_chunks`, `DataProcessor` class, etc.
 
-## 🧩 Dependencies
+## Dependencies
 
 Install the required libraries using pip:
 
@@ -30,7 +30,7 @@ pip install torch ir_datasets wandb numpy scikit-learn sentence-transformers tra
 pip install faiss-cpu
 ```
 
-## 📁 Directory Setup
+## Directory Setup
 
 The code expects the following folder structure for embeddings:
 
@@ -52,7 +52,7 @@ The code expects the following folder structure for embeddings:
 
 
 
-## 📊 Evaluation
+## Evaluation
 
 The notebook includes experiments to vary quantization parameters (codebook size, chunks, etc.) and evaluate retrieval quality using:
 
@@ -60,7 +60,7 @@ The notebook includes experiments to vary quantization parameters (codebook size
 - NDCG@{10,100,1000}
 - Recall@{10,100,1000}
 
-## 📌 Notes
+## Notes
 
 - The project is structured for experimentation with sparse encoding and retrieval tasks.
 - Ideal for academic projects exploring dense-to-sparse transitions in IR.
