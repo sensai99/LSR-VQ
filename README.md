@@ -1,4 +1,7 @@
 # LSR-VQ
+
+![LSR-VQ pipeline](LSR_VQ.png)
+
 Learned Sparse Retrieval with Vector Quantization
 
 - Dataset: [MSMARCO](https://microsoft.github.io/msmarco/Datasets#passage-ranking-dataset) passage ranking dataset in full ranking setting.
