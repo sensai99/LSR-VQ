@@ -50,31 +50,7 @@ The code expects the following folder structure for embeddings:
     └── query_ids.json
 ```
 
-## 🚀 Running
 
-1. **Mount Drive (Google Colab):**
-
-```python
-from google.colab import drive
-drive.mount('/content/drive', force_remount=True)
-```
-
-2. **Change directory to your code folder:**
-
-```python
-cd /content/drive/MyDrive/685/code
-```
-
-3. **Initialize and run the embedding processor:**
-
-```python
-from utils import split_embedding_into_chunks
-from dataset import DataProcessor
-# Load your model and tokenizer here
-# model = ...
-# tokenizer = ...
-ep = EmbeddingProcessor(data_processor, model, tokenizer, emb_root_dir='/path/to/embeddings', device='cuda')
-```
 
 ## 📊 Evaluation
 
