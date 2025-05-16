@@ -16,7 +16,7 @@ This repository contains code for performing sparse retrieval using vector quant
 - code/Model.ipynb : Implementation of **Method A**: Symbolic Retrieval with Vector Quantization. Discretizes chunked dense embeddings into latent tokens and performs retrieval using symbolic indices such as BM25 over learned codes.
 - code/Model_training.ipynb : Implementation and training of **Method B** : Sparse Projection with Vector Quantization (LSR VQ). This model projects quantized embeddings into high-dimensional sparse vectors using a learned transformation, enabling end-to-end training and more expressive scoring via sparse dot products.
 - The code directory also contains major utility functions for handling embedding generation and storage, as well as utility classes for vector quantization, index construction, baselines and metric computation.
-- **Dependencies**: Transformers, Torch, FAISS, ir_datasets, ranx, etc.
+- **Dependencies**: Transformers, Torch, FAISS, ir_datasets, ranx.
 
 ## Dependencies
 
@@ -29,7 +29,7 @@ pip install faiss-cpu
 
 ## Evaluation
 
-The notebook includes experiments to vary quantization parameters (codebook size, chunks, etc.) and evaluate retrieval quality using:
+Retrieval performance is evaluated using:
 
 - MRR@10
 - NDCG@{10,100,1000}
